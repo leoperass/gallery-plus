@@ -6,13 +6,15 @@ import type { Photo } from "../../photo";
 import SelectCheckBoxIllustration from "../../../../../assets/images/select-checkbox.svg?react";
 import Skeleton from "../../../../../components/skeleton";
 import ImagePreview from "../../../../../components/image-preview";
+import PhotoImageSelectable from "../../components/photo-image-selectable";
 
 interface AlbumNewDialogProps {
     trigger: React.ReactNode;
 }
 
 export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
-    //TODO: Use API when it`s ready 
+    //TODO: Use API when it`s ready
+    const isLoadingPhotos = false; 
     const photos: Photo[] = [
         {
             id: "123",
@@ -25,7 +27,7 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
             ],
         },
         {
-            id: "123",
+            id: "321",
             title: "Olá mundo!",
             imageId: "portrait-tree.png",
             albums: [
@@ -34,8 +36,12 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                 { id: "3421", title: "Album 3" },
             ],
         },
-    ]
-    const isLoadingPhotos = false;
+    ];
+
+    function handleTogglePhoto(selected: boolean, photoId: string) {
+        console.log(selected, photoId)
+    }
+    
 
     return (
         <Dialog>
@@ -53,11 +59,12 @@ export default function AlbumNewDialog({ trigger }: AlbumNewDialogProps) {
                         {!isLoadingPhotos && photos.length > 0 && (
                             <div className="flex flex-wrap gap-3">
                                 {photos.map((photo) => (
-                                    <ImagePreview
+                                    <PhotoImageSelectable 
                                         key={photo.id}
                                         src={`/images/${photo.imageId}`}
                                         title={photo.title}
-                                        className="w-20 h-20"
+                                        imageClassName="w-20 h-20"
+                                        onSelectImage={(selected) => handleTogglePhoto(selected,photo.id)}
                                     />
                                 ))}
                             </div>
