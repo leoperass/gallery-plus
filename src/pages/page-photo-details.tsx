@@ -7,10 +7,12 @@ import PhotosNavigator from "../contexts/photos/models/components/photos-navigat
 import ImagePreview from "../components/image-preview";
 import Button from "../components/button";
 import AlbunsListSelectable from "../contexts/photos/models/albums/components/albuns-list-selectable";
+import useAlbums from "../contexts/photos/models/albums/hooks/use-albums";
 
 
 export default function PagePhotoDetails() {
     const {id} = useParams();
+    const {albums, isLoadingAlbums} = useAlbums();
 
     // just for mock test
     const isLoadingPhoto = false;
@@ -63,12 +65,8 @@ export default function PagePhotoDetails() {
 
                     <AlbunsListSelectable 
                         photo={photo}
-                        albums={[
-                            { id: "3421", title: "Album 1" },
-                            { id: "1234", title: "Album 2" },
-                            { id: "5433", title: "Album 3" },
-                        ]}
-                                           
+                        albums={albums}
+                        loading={isLoadingAlbums}            
                     />
                 </div>
             </div>
