@@ -2,12 +2,9 @@ import Button from "../../../../../components/button";
 import { Dialog, DialogBody, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from "../../../../../components/dialog";
 import InputText from "../../../../../components/input-text";
 import Text from "../../../../../components/text";
-import type { Photo } from "../../photo";
 import SelectCheckBoxIllustration from "../../../../../assets/images/select-checkbox.svg?react";
 import Skeleton from "../../../../../components/skeleton";
-import ImagePreview from "../../../../../components/image-preview";
 import PhotoImageSelectable from "../../components/photo-image-selectable";
-import { useQuery } from "@tanstack/react-query";
 import usePhotos from "../../hooks/use-photos";
 
 interface AlbumNewDialogProps {
