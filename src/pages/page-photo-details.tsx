@@ -1,31 +1,26 @@
 import { useParams } from "react-router";
 import Text from "../components/text";
 import Container from "../components/container";
-import type { Photo } from "../contexts/photos/models/photo";
 import Skeleton from "../components/skeleton";
 import PhotosNavigator from "../contexts/photos/models/components/photos-navigator";
 import ImagePreview from "../components/image-preview";
 import Button from "../components/button";
 import AlbunsListSelectable from "../contexts/photos/models/albums/components/albuns-list-selectable";
 import useAlbums from "../contexts/photos/models/albums/hooks/use-albums";
+import usePhoto from "../contexts/photos/models/hooks/use-photo";
+import type { Photo } from "../contexts/photos/models/photo";
 
 
 export default function PagePhotoDetails() {
     const {id} = useParams();
+    const {photo, isLoadingPhoto} = usePhoto(id);
     const {albums, isLoadingAlbums} = useAlbums();
 
-    // just for mock test
-    const isLoadingPhoto = false;
-    const photo = {
-        id: "123",
-        title: "Olá mundo!",
-        imageId: "portrait-tower.png",
-        albums: [
-            { id: "3421", title: "Album 1" },
-            { id: "3421", title: "Album 2" },
-            { id: "3421", title: "Album 3" },
-        ]
-    } as Photo;
+    if (!isLoadingPhoto && !photo) {
+        return <div>
+            Foto não encontrada!
+        </div>
+    }
 
     return (
         <Container>
@@ -43,7 +38,7 @@ export default function PagePhotoDetails() {
                 <div className="space-y-3">
                     {!isLoadingPhoto ? (
                         <ImagePreview 
-                            src={`/images/${photo?.imageId}`}
+                            src={`${import.meta.env.VITE_IMAGES_URL}/${photo?.imageId}`}
                             title={photo?.title}
                             imageClassName="h-[21rem]"
                         />
@@ -64,7 +59,7 @@ export default function PagePhotoDetails() {
                     </Text>
 
                     <AlbunsListSelectable 
-                        photo={photo}
+                        photo={photo as Photo}
                         albums={albums}
                         loading={isLoadingAlbums}            
                     />
