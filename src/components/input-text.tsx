@@ -65,11 +65,17 @@ export default function InputText({
         <div className={inputTextContainerVariants({className})}>
             <div className={inputTextWrapperVariants({size,disabled})}>
                 {icon && <Icon svg={icon} className={inputTextIconVariants({size})}/>}
-                <input className={inputTextVariants()} disabled={disabled as boolean} {...props}/>
+                <input 
+                    className={inputTextVariants()}
+                    disabled={disabled as boolean} 
+                    {...props}
+                />
             </div>
-            {error && <Text variant="label-small" className="text-accent-red">
-                Um erro do campo
-            </Text>}
+            {error && ( 
+                <Text variant="label-small" className="text-accent-red">
+                    {error}
+                </Text>
+            )}
         </div>
     );
 }
