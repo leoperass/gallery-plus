@@ -4,6 +4,7 @@ import type { Photo } from "../photo";
 import type { PhotoNewFormSchema } from "../schemas";
 import { toast } from 'sonner';
 import { useNavigate } from "react-router";
+import usePhotoAlbums from "./use-photo-albums";
 
 interface PhotoDatailResponse extends Photo {
     nextPhotoId?: string;
@@ -19,6 +20,7 @@ export default function usePhoto(id?: string) {
     });
 
     const queryClient = useQueryClient();
+    const { managePhotoOnAlbum } = usePhotoAlbums();
 
     async function createPhoto(payload: PhotoNewFormSchema) {
         try {
@@ -39,9 +41,7 @@ export default function usePhoto(id?: string) {
             );
 
             if(payload.albumsIds && payload.albumsIds.length > 0) {
-                await api.put(`/photos/${photo.id}/albums`, {
-                    albumsIds: payload.albumsIds
-                });
+                await managePhotoOnAlbum(photo.id, payload.albumsIds)
             }
 
             queryClient.invalidateQueries({queryKey: ["photos"]});
